@@ -8,7 +8,7 @@
             href="https://www.creative-tim.com"
             class="font-weight-bold ml-1"
             target="_blank"
-            >Creative Tim</a
+            >Brest APP</a
           >
         </div>
       </div>
@@ -21,7 +21,7 @@
               href="https://www.creative-tim.com"
               class="nav-link"
               target="_blank"
-              >Creative Tim</a
+              >Brest APP</a
             >
           </li>
           <li class="nav-item">
