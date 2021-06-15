@@ -1,26 +1,35 @@
 <template>
-  <div
-    class="custom-control custom-checkbox"
-    :class="[
+  <div>
+    <slot name="label">
+      <label v-if="label" :class="labelClasses">
+        {{ label }}
+        <span v-if="required">*</span>
+      </label>
+    </slot>
+    <div
+        class="custom-control custom-checkbox"
+        :class="[
       { disabled: disabled },
       { [`custom-checkbox-${type}`]: type },
       inlineClass,
     ]"
-  >
-    <input
-      :id="cbId"
-      class="custom-control-input"
-      :class="inputClasses"
-      type="checkbox"
-      :disabled="disabled"
-      v-model="model"
-    />
-    <label :for="cbId" class="custom-control-label">
-      <slot>
-        <span v-if="inline">&nbsp;</span>
-      </slot>
-    </label>
+    >
+      <input
+          :id="cbId"
+          class="custom-control-input"
+          :class="inputClasses"
+          type="checkbox"
+          :disabled="disabled"
+          v-model="model"
+      />
+      <label :for="cbId" class="custom-control-label">
+        <slot>
+          <span v-if="inline">&nbsp;</span>
+        </slot>
+      </label>
+    </div>
   </div>
+
 </template>
 <script>
 export default {
@@ -49,6 +58,17 @@ export default {
     type: {
       type: String,
       description: "Checkbox type (e.g info, danger etc)",
+    },
+    label: {
+      type: String,
+    },
+    required: {
+      type: Boolean,
+    },
+    labelClasses: {
+      type: String,
+      description: "Input label css classes",
+      default: "form-control-label",
     },
   },
   data() {

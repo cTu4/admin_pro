@@ -164,7 +164,9 @@
               </base-pagination>
             </div>
           </template>
-          <modal v-model:show="modal" size="sm" body-classes="p-0">
+
+
+          <modal :show="modal" v-model="formModal" size="sm" body-classes="p-0">
             <card
                 type="secondary"
                 header-classes="bg-transparent pb-3"
@@ -176,45 +178,53 @@
                   <small>Edit {{formModal.departmentName?formModal.departmentName:"department"}}</small>
                 </div>
               </template>
-              <form @submit="Submit" class="mt-2">
+              <form  @submit="Submit" class="mt-2">
                 <base-input
                     name="brandName"
+                    required
                     alternative
-                    :inputValue="formModal.brandName"
+                    v-model="formModal.brandName"
+                    :value="formModal.brandName"
                     class="mb-3"
-                    placeholder="Brand"
+                    label="Brand"
                     addon-left-icon="ni ni-planet"
                 >
                 </base-input>
                 <base-input
                     name="outletName"
+                    required
                     alternative
                     v-model="formModal.outletName"
-                    placeholder="Outlet"
+                    :value="formModal.outletName"
+                    label="Outlet"
                     addon-left-icon="ni ni-shop"
                 >
                 </base-input>
 
                 <base-input
                     name="departmentName"
+                    required
                     alternative
-                    v-model:value="formModal.departmentName"
-                    placeholder="departmentName"
+                    v-model="formModal.departmentName"
+                    :value="formModal.departmentName"
+                    label="departmentName"
                     addon-left-icon="ni ni-building"
                 >
                 </base-input>
 
-                <base-input
+                <base-checkbox
                     name="isActive"
+                    required
                     alternative
-                    v-model:value="formModal.isActive === 'Y'"
+                    v-model="formModal.isActive === 'Y'"
+                    :modelValue="formModal.isActive === 'Y'"
                     type="checkbox"
                     label="Active"
                 >
-                </base-input>
+                </base-checkbox>
 
                 <div class="text-center">
-                  <base-button  type="primary" native-type="submit" class="my-4">
+                  <base-button  @click="Submit" type="primary"  class="my-4">
                     Submit
                   </base-button>
                 </div>
@@ -235,6 +245,10 @@
 import axios from "axios";
 import Modal from "@/components/Modal";
 import BaseInput from "@/components/Inputs/BaseInput.vue";
+import BaseCheckbox from "@/components/Inputs/BaseCheckbox.vue";
+
+import { useToast } from "vue-toastification";
+import Notification from "@/components/Notification";
 
 
 
@@ -257,7 +271,9 @@ export default {
     [ElInput.name]: ElInput,
     [ElTableColumn.name]: ElTableColumn,
     Modal,
-    BaseInput
+    BaseInput,
+    BaseCheckbox,
+    Notification
   },
   data() {
     return {
@@ -354,7 +370,35 @@ export default {
   },
   methods: {
     Submit(values){
-      console.log(values);
+      console.log(this.formModal);
+      axios.put("https://api.brest.app/department/", this.formModal, {
+        headers:{
+          // Authorization: auth
+          Authorization: this.$store.state.auth
+        }
+      })
+    },
+    runToast(pos, type, ownText, ownIcon) {
+      const text =
+          "Welcome to <b>Vue Argon Dashboard Pro</b> - a beautiful resource for every web developer";
+      const icon = "ni ni-bell-55";
+      const content = {
+        component: Notification,
+        props: {
+          ownText: ownText,
+          ownIcon: ownIcon,
+          icon: icon,
+          text: text,
+          type: type,
+        },
+      };
+      const toast = useToast();
+      toast(content, {
+        hideProgressBar: true,
+        icon: false,
+        closeButton: true,
+        position: pos,
+      });
     },
     handleEdit(index, row) {
       this.formModal = row;
@@ -387,11 +431,32 @@ export default {
             confirmButtonText: "Yes, delete it!",
           })
           .then((result) => {
+            console.log(this.$store.state.auth)
             if (result.value) {
-              this.deleteRow(row);
-              swalWithBootstrapButtons3.fire({
-                title: "Deleted!",
-                text: `You deleted ${row.departmentName}`,
+              console.log(row);
+              axios.delete("https://api.brest.app/department/",{
+                headers:{
+                  // Authorization: auth
+                  Authorization: this.$store.state.auth
+                },
+                data:{
+                  uuid: row.uuid
+                }
+              }).then((resp) =>{
+                this.deleteRow(row);
+                swalWithBootstrapButtons3.fire({
+                  title: "Deleted!",
+                  text: `You deleted ${row.departmentName}`,
+                });
+              }).catch((error) =>{
+                swalWithBootstrapButtons3.fire({
+                  title: "Oops!",
+                  text: `Something's wrong`,
+                  showCancelButton: true,
+                  showConfirmButton: false,
+                  cancelButtonText: "Ok"
+                });
+                console.error(error);
               });
             }
           });
@@ -436,9 +501,9 @@ export default {
 
         }
         this.tableData = rows;
-        this.totalCard = total;
-        this.activeCard = active;
-        this.blockedCard = blocked;
+        this.totalCard =  total.toString();
+        this.activeCard = active.toString();
+        this.blockedCard = blocked.toString();
 
       }
     }).catch(() => {

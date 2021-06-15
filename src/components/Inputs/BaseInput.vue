@@ -27,19 +27,34 @@
         </span>
       </div>
       <slot>
+<!--        <input-->
+<!--          class="form-control"-->
+<!--          :name="name"-->
+<!--          :id="name"-->
+<!--          :type="type"-->
+<!--          :placeholder="placeholder"-->
+<!--          :required="required"-->
+<!--          :disabled="disabled"-->
+<!--          :value="inputValue"-->
+<!--          @input="handleChange"-->
+<!--          @blur="focused = false"-->
+<!--          @focus="focused = true"-->
+<!--          :class="inputClasses"-->
+<!--        />-->
         <input
-          class="form-control"
-          :name="name"
-          :id="name"
-          :type="type"
-          :placeholder="placeholder"
-          :required="required"
-          :disabled="disabled"
-          :value="inputValue"
-          @input="handleChange"
-          @blur="focused = false"
-          @focus="focused = true"
-          :class="inputClasses"
+            class="form-control"
+            :name="name"
+            :id="name"
+            :type="type"
+            :placeholder="placeholder"
+            :required="required"
+            :disabled="disabled"
+            :value="value"
+            v-model="value"
+            @input="handleChange"
+            @blur="focused = false"
+            @focus="focused = true"
+            :class="inputClasses"
         />
       </slot>
       <div
