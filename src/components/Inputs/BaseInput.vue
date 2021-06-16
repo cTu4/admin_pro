@@ -49,9 +49,8 @@
             :placeholder="placeholder"
             :required="required"
             :disabled="disabled"
-            :value="value"
             v-model="value"
-            @input="handleChange"
+            @input="$emit('update:value', $event.target.value)"
             @blur="focused = false"
             @focus="focused = true"
             :class="inputClasses"
@@ -138,6 +137,7 @@ export default {
       default: "",
     },
   },
+  emits:['update:value'],
   data() {
     return {
       focused: false,

@@ -183,8 +183,7 @@
                     name="brandName"
                     required
                     alternative
-                    v-model="formModal.brandName"
-                    :value="formModal.brandName"
+                    v-model:value="formModal.brandName"
                     class="mb-3"
                     label="Brand"
                     addon-left-icon="ni ni-planet"
@@ -194,8 +193,7 @@
                     name="outletName"
                     required
                     alternative
-                    v-model="formModal.outletName"
-                    :value="formModal.outletName"
+                    v-model:value="formModal.outletName"
                     label="Outlet"
                     addon-left-icon="ni ni-shop"
                 >
@@ -205,8 +203,8 @@
                     name="departmentName"
                     required
                     alternative
-                    v-model="formModal.departmentName"
-                    :value="formModal.departmentName"
+                    v-model:value="formModal.departmentName"
+
                     label="departmentName"
                     addon-left-icon="ni ni-building"
                 >
@@ -215,13 +213,12 @@
                 <base-checkbox
                     name="isActive"
                     required
-                    alternative
-                    v-model="formModal.isActive === 'Y'"
-                    :modelValue="formModal.isActive === 'Y'"
-                    type="checkbox"
+                    v-model="active"
+                    type="info"
                     label="Active"
                 >
                 </base-checkbox>
+
 
                 <div class="text-center">
                   <base-button  @click="Submit" type="primary"  class="my-4">
@@ -246,6 +243,7 @@ import axios from "axios";
 import Modal from "@/components/Modal";
 import BaseInput from "@/components/Inputs/BaseInput.vue";
 import BaseCheckbox from "@/components/Inputs/BaseCheckbox.vue";
+import BaseSwitch from "@/components/BaseSwitch.vue";
 
 import { useToast } from "vue-toastification";
 import Notification from "@/components/Notification";
@@ -273,6 +271,7 @@ export default {
     Modal,
     BaseInput,
     BaseCheckbox,
+    BaseSwitch,
     Notification
   },
   data() {
@@ -285,7 +284,7 @@ export default {
         brandName: '',
         outletName: "",
         departmentName: "",
-        isActive: ""
+        isActive: true
       },
       pagination: {
         perPage: 5,
@@ -311,7 +310,6 @@ export default {
           label: "Department",
           minWidth: 150,
         },
-
         {
           prop: "isActive",
           label: "Active",
@@ -326,6 +324,14 @@ export default {
     };
   },
   computed: {
+    active:{
+      get(){
+        return this.formModal.isActive === "Y";
+      },
+      set(value){
+        this.formModal.isActive = value?"Y":"N";
+      }
+    },
     pagedData() {
       return this.tableData.slice(this.from, this.to);
     },
@@ -376,11 +382,17 @@ export default {
           // Authorization: auth
           Authorization: this.$store.state.auth
         }
-      })
+      }).then((resp) =>{
+        this.showSwal('success');
+        this.modal = false;
+      }).catch((error)=>{
+        this.showSwal('warning');
+      });
+
     },
     runToast(pos, type, ownText, ownIcon) {
       const text =
-          "Welcome to <b>Vue Argon Dashboard Pro</b> - a beautiful resource for every web developer";
+          "Welcome to <b>BrestApp Dashboard</b>";
       const icon = "ni ni-bell-55";
       const content = {
         component: Notification,
@@ -400,6 +412,7 @@ export default {
         position: pos,
       });
     },
+
     handleEdit(index, row) {
       this.formModal = row;
       console.log(this.formModal);
@@ -415,6 +428,58 @@ export default {
       //   title: `You want to edit ${row.departmentName}`,
       // });
     },
+    showSwal(type) {
+      if (type === "basic") {
+        swal.fire({
+          title: `Here's a message!`,
+          text: `A few words about this sweet alert ...`,
+          buttonsStyling: false,
+          customClass: {
+            confirmButton: "btn btn-primary",
+          },
+        });
+      } else if (type === "info") {
+        swal.fire({
+          icon: "info",
+          title: `Info`,
+          text: `A few words about this sweet alert ...`,
+          buttonsStyling: false,
+          customClass: {
+            confirmButton: "btn btn-info",
+          },
+        });
+      } else if (type === "success") {
+        swal.fire({
+          title: `Success`,
+          text: "A few words about this sweet alert ...",
+          buttonsStyling: false,
+          customClass: {
+            confirmButton: "btn btn-success",
+          },
+          icon: "success",
+        });
+      } else if (type === "warning") {
+        swal.fire({
+          title: `Warning`,
+          text: "Somethings wrong! Try later...",
+          buttonsStyling: false,
+          customClass: {
+            confirmButton: "btn btn-warning",
+          },
+          icon: "warning",
+        });
+      } else if (type === "question") {
+        swal.fire({
+          title: `Are you sure?`,
+          text: "A few words about this sweet alert ...",
+          buttonsStyling: false,
+          customClass: {
+            confirmButton: "btn btn-default",
+          },
+          icon: "question",
+        });
+      }
+    },
     handleDelete(index, row) {
       const swalWithBootstrapButtons3 = swal.mixin({
         customClass: {
@@ -425,10 +490,10 @@ export default {
       });
       swalWithBootstrapButtons3
           .fire({
-            title: "Are you sure?",
-            text: `You won't be able to revert this!`,
+            title: "Deactivate this department?",
+            text: `You can't be able to use it before re-activate`,
             showCancelButton: true,
-            confirmButtonText: "Yes, delete it!",
+            confirmButtonText: "Yes, deactivate.",
           })
           .then((result) => {
             console.log(this.$store.state.auth)
@@ -443,10 +508,11 @@ export default {
                   uuid: row.uuid
                 }
               }).then((resp) =>{
-                this.deleteRow(row);
+                // this.deleteRow(row);
+                row.isActive = row.isActive === "Y"? "N":"Y";
                 swalWithBootstrapButtons3.fire({
-                  title: "Deleted!",
-                  text: `You deleted ${row.departmentName}`,
+                  title: "Now inactive!",
+                  text: `You mark inactive ${row.departmentName}`,
                 });
               }).catch((error) =>{
                 swalWithBootstrapButtons3.fire({
