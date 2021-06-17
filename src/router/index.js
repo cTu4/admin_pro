@@ -232,6 +232,7 @@ const routes = [
     ],
   },
   componentsMenu,
+  tablesMenu
   // {
   //   path: "/",
   //   redirect: "auth",

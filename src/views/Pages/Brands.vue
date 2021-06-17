@@ -57,6 +57,8 @@
     <div class="brands mt--7 ">
 
 
+
+
     </div>
   </div>
 </template>
@@ -64,18 +66,19 @@
 <script>
 // @ is an alias to /src
 import axios from "axios";
-import moment from 'moment';
+import Modal from "@/components/Modal";
 
 export default {
   name: "Brands",
   components: {
-    
+    Modal
   },
   data(){
     return {
       total: 0,
       active: 0,
       blocked: 0,
+      modal: false,
       table:{
         isLoading: false,
         isReSearch: false,

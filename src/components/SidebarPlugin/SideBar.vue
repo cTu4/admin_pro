@@ -44,55 +44,55 @@
         </ul>
         <slot name="links-after"></slot>
 
-<!--        <hr class="my-3" />-->
+        <hr class="my-3" />
 
-<!--          <ul v-if="$store.state.auth" class="navbar-nav ml-auto ml-md-0">-->
-<!--            <base-dropdown-->
-<!--                menu-on-up-->
-<!--                tag="li"-->
-<!--                title-tag="a"-->
-<!--                title-classes="nav-link pr-0"-->
-<!--                direction="up"-->
-<!--            >-->
-<!--              <template v-slot:title-container>-->
-<!--                <a href="#" class=" pr-0" @click.prevent>-->
-<!--                  <div class="media align-items-center">-->
-<!--              <span class="avatar avatar-sm rounded-circle">-->
-<!--                <img alt="Image placeholder" src="img/theme/team-4.jpg" />-->
-<!--              </span>-->
-<!--                    <div :class="{ show: isActive }" class="media-body ml-2 d-none d-lg-block">-->
-<!--                      <span class="mb-0 text-sm font-weight-bold">John Snow</span>-->
-<!--                    </div>-->
-<!--                  </div>-->
-<!--                </a>-->
-<!--              </template>-->
+          <ul v-if="$store.state.auth" class="navbar-nav ml-auto ml-md-0 login">
+            <base-dropdown
+                menu-on-up
+                tag="li"
+                title-tag="a"
+                title-classes="nav-link pr-0"
+                direction="up"
+            >
+              <template v-slot:title-container>
+                <a href="#" class=" pr-0" @click.prevent>
+                  <div class="media align-items-center">
+              <span class="avatar avatar-sm rounded-circle">
+                <img alt="Image placeholder" src="img/theme/team-4.jpg" />
+              </span>
+                    <div  class="media-body ml-2" :class="{ 'd-none': $sidebar.isMinimized && !$sidebar.hovered }">
+                      <span class="mb-0 text-sm font-weight-bold">John Snow</span>
+                    </div>
+                  </div>
+                </a>
+              </template>
 
-<!--              <div class="dropdown-header noti-title">-->
-<!--                <h6 class="text-overflow m-0">Welcome!</h6>-->
-<!--              </div>-->
-<!--              <a href="#!" class="dropdown-item">-->
-<!--                <i class="ni ni-single-02"></i>-->
-<!--                <span>My profile</span>-->
-<!--              </a>-->
-<!--              <a href="#!" class="dropdown-item">-->
-<!--                <i class="ni ni-settings-gear-65"></i>-->
-<!--                <span>Settings</span>-->
-<!--              </a>-->
-<!--              <a href="#!" class="dropdown-item">-->
-<!--                <i class="ni ni-calendar-grid-58"></i>-->
-<!--                <span>Activity</span>-->
-<!--              </a>-->
-<!--              <a href="#!" class="dropdown-item">-->
-<!--                <i class="ni ni-support-16"></i>-->
-<!--                <span>Support</span>-->
-<!--              </a>-->
-<!--              <div class="dropdown-divider"></div>-->
-<!--              <router-link @click="logOut" to="/login" class="dropdown-item">-->
-<!--                <i class="ni ni-user-run"></i>-->
-<!--                <span>Logout</span>-->
-<!--              </router-link>-->
-<!--            </base-dropdown>-->
-<!--          </ul>-->
+              <div class="dropdown-header noti-title">
+                <h6 class="text-overflow m-0">Welcome!</h6>
+              </div>
+              <a href="#!" class="dropdown-item">
+                <i class="ni ni-single-02"></i>
+                <span>My profile</span>
+              </a>
+              <a href="#!" class="dropdown-item">
+                <i class="ni ni-settings-gear-65"></i>
+                <span>Settings</span>
+              </a>
+              <a href="#!" class="dropdown-item">
+                <i class="ni ni-calendar-grid-58"></i>
+                <span>Activity</span>
+              </a>
+              <a href="#!" class="dropdown-item">
+                <i class="ni ni-support-16"></i>
+                <span>Support</span>
+              </a>
+              <div class="dropdown-divider"></div>
+              <router-link @click="logOut" to="/login" class="dropdown-item">
+                <i class="ni ni-user-run"></i>
+                <span>Logout</span>
+              </router-link>
+            </base-dropdown>
+          </ul>
 
       </div>
     </div>
@@ -147,6 +147,7 @@ export default {
     }
   },
   mounted() {
+    console.log(this.$sidebar);
     this.$sidebar.isMinimized = this.$sidebar.breakpoint < window.innerWidth;
     this.minimizeSidebar();
   },
@@ -157,3 +158,16 @@ export default {
   },
 };
 </script>
+<style scoped>
+  .avatar{
+    width: 20px!important;
+    height: 20px!important;
+  }
+  .scrollbar-inner{
+    overflow-x: hidden;
+  }
+  .login{
+    /*position: absolute;*/
+    /*bottom: 30px;*/
+  }
+</style>

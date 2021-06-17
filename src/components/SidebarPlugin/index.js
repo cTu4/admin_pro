@@ -12,6 +12,8 @@ const SidebarStore = reactive({
     if (window.innerWidth > this.breakpoint) {
       return;
     }
+    console.log('aaa')
+
     this.isMinimized = !value;
     this.showSidebar = value;
     let docClasses = document.body.classList;
@@ -28,6 +30,8 @@ const SidebarStore = reactive({
   toggleMinimize() {
     this.isMinimized = !this.isMinimized;
     let docClasses = document.body.classList;
+    console.log()
+
     if (this.isMinimized) {
       docClasses.add("g-sidenav-hidden");
       docClasses.remove("g-sidenav-pinned");
@@ -39,6 +43,7 @@ const SidebarStore = reactive({
     }
     if (this.hovered) {
       docClasses.add("g-sidenav-show");
+
     }
   },
   onMouseEnter() {

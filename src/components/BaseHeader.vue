@@ -19,4 +19,13 @@ export default {
   },
 };
 </script>
-<style></style>
+<style scoped>
+.header{
+  background: linear-gradient(
+      87deg
+      , #5e72e4 0, #825ee4 100%) !important;
+}
+
+
+
+</style>

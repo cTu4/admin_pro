@@ -70,7 +70,7 @@
 
     </side-bar>
     <div class="main-content">
-      <dashboard-navbar :type="$route.meta.navbarType"></dashboard-navbar>
+<!--      <dashboard-navbar :type="$route.meta.navbarType"></dashboard-navbar>-->
 
       <div @click="$sidebar.displaySidebar(false)">
 
@@ -121,4 +121,8 @@ export default {
   },
 };
 </script>
-<style lang="scss"></style>
+<style lang="scss">
+.main-content{
+  height: 100vh;
+}
+</style>

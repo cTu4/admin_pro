@@ -1,69 +1,71 @@
 <template>
   <div>
-    <base-header type="gradient-primary" class="pb-6 pb-8 pt-5">
+    <base-header type="gradient-primary" class="pb-6 pb-8">
 
       <div class="row align-items-center py-4">
-        <div class="col-lg-12 col-12">
+        <div class="col-lg-11 col-11">
           <h6 class="h2 text-white d-inline-block mb-0">Departments</h6>
           <nav aria-label="breadcrumb" class="d-none d-md-inline-block ml-md-4">
             <route-bread-crumb></route-bread-crumb>
           </nav>
         </div>
 
+
+
       </div>
-      <div  class="row">
-        <div class="col-xl-4 col-lg-4">
-          <stats-card
-              title="Total"
-              color="gradient-blue"
-              :sub-title="totalCard"
-              icon="ni ni-shop"
-              class="mb-4 mb-xl-0 non-m"
-          >
-<!--            <template v-slot:footer>-->
-<!--              <span class="text-success mr-2">-->
-<!--                <i class="fa fa-arrow-up"></i> 3.48%-->
-<!--              </span>-->
-<!--              <span class="text-nowrap">Since last month</span>-->
-<!--            </template>-->
-          </stats-card>
-        </div>
-        <div class="col-xl-4 col-lg-4">
-          <stats-card
-              title="Active"
-              type="gradient-green"
-              :sub-title="activeCard"
-              icon="ni ni-shop"
-              class="mb-4 mb-xl-0 non-m"
-          >
-<!--            <template v-slot:footer>-->
-<!--              <span class="text-danger mr-2">-->
-<!--                <i class="fa fa-arrow-down"></i> 5.72%-->
-<!--              </span>-->
-<!--              <span class="text-nowrap">Since last month</span>-->
-<!--            </template>-->
-          </stats-card>
-        </div>
-        <div class="col-xl-4 col-lg-4">
-          <stats-card
-              title="Blocked"
-              type="gradient-red"
-              :sub-title="blockedCard"
-              icon="ni ni-shop"
-              class="mb-4 mb-xl-0 non-m"
-          >
-<!--            <template v-slot:footer>-->
-<!--              <span class="text-danger mr-2">-->
-<!--                <i class="fa fa-arrow-down"></i> 5.72%-->
-<!--              </span>-->
-<!--              <span class="text-nowrap">Since last month</span>-->
-<!--            </template>-->
-          </stats-card>
-        </div>
-      </div>
+<!--      <div  class="row">-->
+<!--        <div class="col-xl-4 col-lg-4">-->
+<!--          <stats-card-->
+<!--              title="Total"-->
+<!--              color="gradient-blue"-->
+<!--              :sub-title="totalCard"-->
+<!--              icon="ni ni-shop"-->
+<!--              class="mb-4 mb-xl-0 non-m"-->
+<!--          >-->
+<!--&lt;!&ndash;            <template v-slot:footer>&ndash;&gt;-->
+<!--&lt;!&ndash;              <span class="text-success mr-2">&ndash;&gt;-->
+<!--&lt;!&ndash;                <i class="fa fa-arrow-up"></i> 3.48%&ndash;&gt;-->
+<!--&lt;!&ndash;              </span>&ndash;&gt;-->
+<!--&lt;!&ndash;              <span class="text-nowrap">Since last month</span>&ndash;&gt;-->
+<!--&lt;!&ndash;            </template>&ndash;&gt;-->
+<!--          </stats-card>-->
+<!--        </div>-->
+<!--        <div class="col-xl-4 col-lg-4">-->
+<!--          <stats-card-->
+<!--              title="Active"-->
+<!--              type="gradient-green"-->
+<!--              :sub-title="activeCard"-->
+<!--              icon="ni ni-shop"-->
+<!--              class="mb-4 mb-xl-0 non-m"-->
+<!--          >-->
+<!--&lt;!&ndash;            <template v-slot:footer>&ndash;&gt;-->
+<!--&lt;!&ndash;              <span class="text-danger mr-2">&ndash;&gt;-->
+<!--&lt;!&ndash;                <i class="fa fa-arrow-down"></i> 5.72%&ndash;&gt;-->
+<!--&lt;!&ndash;              </span>&ndash;&gt;-->
+<!--&lt;!&ndash;              <span class="text-nowrap">Since last month</span>&ndash;&gt;-->
+<!--&lt;!&ndash;            </template>&ndash;&gt;-->
+<!--          </stats-card>-->
+<!--        </div>-->
+<!--        <div class="col-xl-4 col-lg-4">-->
+<!--          <stats-card-->
+<!--              title="Blocked"-->
+<!--              type="gradient-red"-->
+<!--              :sub-title="blockedCard"-->
+<!--              icon="ni ni-shop"-->
+<!--              class="mb-4 mb-xl-0 non-m"-->
+<!--          >-->
+<!--&lt;!&ndash;            <template v-slot:footer>&ndash;&gt;-->
+<!--&lt;!&ndash;              <span class="text-danger mr-2">&ndash;&gt;-->
+<!--&lt;!&ndash;                <i class="fa fa-arrow-down"></i> 5.72%&ndash;&gt;-->
+<!--&lt;!&ndash;              </span>&ndash;&gt;-->
+<!--&lt;!&ndash;              <span class="text-nowrap">Since last month</span>&ndash;&gt;-->
+<!--&lt;!&ndash;            </template>&ndash;&gt;-->
+<!--          </stats-card>-->
+<!--        </div>-->
+<!--      </div>-->
     </base-header>
       <!-- Card stats -->
-    <div class="outlets mt--7 ">
+    <div class="outlets mt--8">
       <div>
         <card
             class="no-border-card"
@@ -166,74 +168,78 @@
           </template>
 
 
-          <modal :show="modal" v-model="formModal" size="sm" body-classes="p-0">
-            <card
-                type="secondary"
-                header-classes="bg-transparent pb-3"
-                body-classes="px-lg-5 py-lg-5"
-                class="border-0 mb-0"
-            >
-              <template v-slot:header>
-                <div class="text-muted text-center mt-2 mb-1">
-                  <small>Edit {{formModal.departmentName?formModal.departmentName:"department"}}</small>
-                </div>
-              </template>
-              <form  @submit="Submit" class="mt-2">
-                <base-input
-                    name="brandName"
-                    required
-                    alternative
-                    v-model:value="formModal.brandName"
-                    class="mb-3"
-                    label="Brand"
-                    addon-left-icon="ni ni-planet"
-                >
-                </base-input>
-                <base-input
-                    name="outletName"
-                    required
-                    alternative
-                    v-model:value="formModal.outletName"
-                    label="Outlet"
-                    addon-left-icon="ni ni-shop"
-                >
-                </base-input>
 
-                <base-input
-                    name="departmentName"
-                    required
-                    alternative
-                    v-model:value="formModal.departmentName"
-
-                    label="departmentName"
-                    addon-left-icon="ni ni-building"
-                >
-                </base-input>
-
-                <base-checkbox
-                    name="isActive"
-                    required
-                    v-model="active"
-                    type="info"
-                    label="Active"
-                >
-                </base-checkbox>
-
-
-                <div class="text-center">
-                  <base-button  @click="Submit" type="primary"  class="my-4">
-                    Submit
-                  </base-button>
-                </div>
-              </form>
-            </card>
-          </modal>
         </card>
       </div>
 
 
 
     </div>
+    <modal v-model:show="modal"  size="sm" body-classes="p-0">
+      <card
+          type="secondary"
+          header-classes="bg-transparent pb-3"
+          body-classes="px-lg-5 py-lg-5"
+          class="border-0 mb-0"
+      >
+        <template v-slot:header>
+          <div class="text-muted text-center mt-2 mb-1">
+            <small>Edit {{formModal.departmentName?formModal.departmentName:"department"}}</small>
+          </div>
+        </template>
+        <form  @submit="Submit" class="mt-2">
+          <base-input
+              name="brandName"
+              required
+              alternative
+              v-model:value="formModal.brandName"
+              class="mb-3"
+              label="Brand"
+              addon-left-icon="ni ni-planet"
+          >
+          </base-input>
+          <base-input
+              name="outletName"
+              required
+              alternative
+              v-model:value="formModal.outletName"
+              label="Outlet"
+              addon-left-icon="ni ni-shop"
+          >
+          </base-input>
+
+          <base-input
+              name="departmentName"
+              required
+              alternative
+              v-model:value="formModal.departmentName"
+
+              label="departmentName"
+              addon-left-icon="ni ni-building"
+          >
+          </base-input>
+
+          <base-checkbox
+              name="isActive"
+              required
+              v-model="active"
+              type="info"
+              label="Active"
+          >
+          </base-checkbox>
+
+
+          <div class="text-center">
+            <base-button  @click="Submit" type="primary"  class="my-4">
+              Submit
+            </base-button>
+            <base-button  @click="modal = false" type="danger"  class="my-4">
+              Cancel
+            </base-button>
+          </div>
+        </form>
+      </card>
+    </modal>
   </div>
 </template>
 
@@ -324,6 +330,9 @@ export default {
     };
   },
   computed: {
+    type(){
+      return this.$route.meta.navbarType
+    },
     active:{
       get(){
         return this.formModal.isActive === "Y";
@@ -384,33 +393,16 @@ export default {
         }
       }).then((resp) =>{
         this.showSwal('success');
+        // this.runToast('top-right', 'success')
         this.modal = false;
       }).catch((error)=>{
         this.showSwal('warning');
       });
 
     },
-    runToast(pos, type, ownText, ownIcon) {
-      const text =
-          "Welcome to <b>BrestApp Dashboard</b>";
-      const icon = "ni ni-bell-55";
-      const content = {
-        component: Notification,
-        props: {
-          ownText: ownText,
-          ownIcon: ownIcon,
-          icon: icon,
-          text: text,
-          type: type,
-        },
-      };
-      const toast = useToast();
-      toast(content, {
-        hideProgressBar: true,
-        icon: false,
-        closeButton: true,
-        position: pos,
-      });
+    toggleSidebar() {
+      console.log(this.$sidebar.showSidebar);
+      this.$sidebar.displaySidebar(!this.$sidebar.showSidebar);
     },
 
     handleEdit(index, row) {
@@ -427,6 +419,54 @@ export default {
       // swalWithBootstrapButtons2.fire({
       //   title: `You want to edit ${row.departmentName}`,
       // });
+    },
+    handleDelete(index, row) {
+      const swalWithBootstrapButtons3 = swal.mixin({
+        customClass: {
+          confirmButton: "btn btn-success btn-fill",
+          cancelButton: "btn btn-danger btn-fill",
+        },
+        buttonsStyling: false,
+      });
+      console.log(document.body);
+      let title = row.isActive ==="Y"?"Deactivate":"Activate"
+      swalWithBootstrapButtons3
+          .fire({
+            title: title + " this department?",
+            text: row.isActive ==="Y"?`You can't be able to use it before re-activate`:"",
+            showCancelButton: true,
+            confirmButtonText: "Yes, "+title.toLowerCase()+".",
+          })
+          .then((result) => {
+            if (result.value) {
+              console.log(row);
+              axios.delete("https://api.brest.app/department/",{
+                headers:{
+                  // Authorization: auth
+                  Authorization: this.$store.state.auth
+                },
+                data:{
+                  uuid: row.uuid
+                }
+              }).then((resp) =>{
+                // this.deleteRow(row);
+                row.isActive = row.isActive === "Y"? "N":"Y";
+                swalWithBootstrapButtons3.fire({
+                  title: `Now ${row.isActive ==="Y"?"active":"inactive"}!`,
+                  text: `You mark ${row.departmentName} ${row.isActive ==="Y"?"active":"inactive"}`,
+                });
+              }).catch((error) =>{
+                swalWithBootstrapButtons3.fire({
+                  title: "Oops!",
+                  text: `Something's wrong`,
+                  showCancelButton: true,
+                  showConfirmButton: false,
+                  cancelButtonText: "Ok"
+                });
+                console.error(error);
+              });
+            }
+          });
     },
     showSwal(type) {
       if (type === "basic") {
@@ -480,53 +520,29 @@ export default {
         });
       }
     },
-    handleDelete(index, row) {
-      const swalWithBootstrapButtons3 = swal.mixin({
-        customClass: {
-          confirmButton: "btn btn-success btn-fill",
-          cancelButton: "btn btn-danger btn-fill",
+    runToast(pos, type, ownText, ownIcon) {
+      const text =
+          "Welcome to <b>BrestApp Dashboard</b>";
+      const icon = "ni ni-bell-55";
+      const content = {
+        component: Notification,
+        props: {
+          ownText: ownText,
+          ownIcon: ownIcon,
+          icon: icon,
+          text: text,
+          type: type,
         },
-        buttonsStyling: false,
+      };
+      const toast = useToast();
+      toast(content, {
+        hideProgressBar: true,
+        icon: false,
+        closeButton: true,
+        position: pos,
       });
-      swalWithBootstrapButtons3
-          .fire({
-            title: "Deactivate this department?",
-            text: `You can't be able to use it before re-activate`,
-            showCancelButton: true,
-            confirmButtonText: "Yes, deactivate.",
-          })
-          .then((result) => {
-            console.log(this.$store.state.auth)
-            if (result.value) {
-              console.log(row);
-              axios.delete("https://api.brest.app/department/",{
-                headers:{
-                  // Authorization: auth
-                  Authorization: this.$store.state.auth
-                },
-                data:{
-                  uuid: row.uuid
-                }
-              }).then((resp) =>{
-                // this.deleteRow(row);
-                row.isActive = row.isActive === "Y"? "N":"Y";
-                swalWithBootstrapButtons3.fire({
-                  title: "Now inactive!",
-                  text: `You mark inactive ${row.departmentName}`,
-                });
-              }).catch((error) =>{
-                swalWithBootstrapButtons3.fire({
-                  title: "Oops!",
-                  text: `Something's wrong`,
-                  showCancelButton: true,
-                  showConfirmButton: false,
-                  cancelButtonText: "Ok"
-                });
-                console.error(error);
-              });
-            }
-          });
     },
+
     deleteRow(row) {
       let indexToDelete = this.tableData.findIndex(
           (tableRow) => tableRow.id === row.id

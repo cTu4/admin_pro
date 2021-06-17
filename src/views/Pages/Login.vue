@@ -59,10 +59,12 @@
 <!--              <div class="text-center text-muted mb-4">-->
 <!--                <small>Or sign in with credentials</small>-->
 <!--              </div>-->
-              <Form @submit="onSubmit" :validation-schema="schema">
+<!--              :validation-schema="schema"-->
+              <Form @submit="onSubmit" >
                 <base-input
                   alternative
                   name="email"
+                  v-model:value="model.email"
                   addon-left-icon="ni ni-email-83"
                   placeholder="Email"
                 >
@@ -71,6 +73,7 @@
                 <base-input
                   alternative
                   name="password"
+                  v-model:value="model.password"
                   addon-left-icon="ni ni-lock-circle-open"
                   type="password"
                   placeholder="Password"
@@ -109,6 +112,8 @@
 import { Form } from "vee-validate";
 import * as Yup from "yup";
 import axios from "axios";
+import { useToast } from "vue-toastification";
+import Notification from "@/components/Notification";
 
 
 export default {
@@ -126,11 +131,11 @@ export default {
   },
   methods:{
         onSubmit(values) {
-            if(values.email && values.password){
-              console.log(values);
+            if(this.model.email && this.model.password){
+              console.log(this.model);
               axios.post('https://api.brest.app/token/',{
-                    "email": values.email,
-                    "password": values.password
+                    "email": this.model.email,
+                    "password": this.model.password
                   },
                   {
                     headers:{
@@ -144,13 +149,35 @@ export default {
                   this.$router.push({path: '/dashboard'});
                 }
                 else {
-                  alert('Wrong auth!')
+                  this.runToast('top-right', 'danger',"Wrong auth!")
                 }
 
               });
           }
 
-      }
+      },
+    runToast(pos, type, ownText, ownIcon) {
+      const text =
+          "Welcome to <b>Vue Argon Dashboard Pro</b> - a beautiful resource for every web developer";
+      const icon = "ni ni-bell-55";
+      const content = {
+        component: Notification,
+        props: {
+          ownText: ownText,
+          ownIcon: ownIcon,
+          icon: icon,
+          text: text,
+          type: type,
+        },
+      };
+      const toast = useToast();
+      toast(content, {
+        hideProgressBar: true,
+        icon: false,
+        closeButton: false,
+        position: pos,
+      });
+    },
   },
   setup() {
     // function onSubmit(values) {

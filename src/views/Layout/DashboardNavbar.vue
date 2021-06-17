@@ -271,6 +271,7 @@
         tag="li"
         title-tag="a"
         title-classes="nav-link pr-0"
+        direction="up"
       >
         <template v-slot:title-container>
           <a href="#" class="nav-link pr-0" @click.prevent>
@@ -305,7 +306,7 @@
           <span>Support</span>
         </a>
         <div class="dropdown-divider"></div>
-        <a href="#!" class="dropdown-item">
+        <a  @click="LogOut" class="dropdown-item">
           <i class="ni ni-user-run"></i>
           <span>Logout</span>
         </a>
@@ -343,6 +344,10 @@ export default {
     };
   },
   methods: {
+    LogOut(){
+      this.$store.commit('logOut');
+      this.$router.push({path: '/login'});
+    },
     capitalizeFirstLetter(string) {
       return string.charAt(0).toUpperCase() + string.slice(1);
     },
@@ -361,3 +366,13 @@ export default {
   },
 };
 </script>
+<style>
+.navbar-top{
+  background: linear-gradient(
+      87deg
+      , #5e72e4 0, #825ee4 100%) !important;
+}
+
+
+
+</style>
